@@ -21,10 +21,10 @@ class MenuClass:
         self.app = app
         self.window_surface = self.app.window_surface
         self.ui_manager = self.app.manager
-        self.image_background = BackgroundSpriteClass(self.window_surface, "background.png")     
-        self.ship2 = ShipSpriteClass(self.window_surface,"Ship_1.png","Ship_2.png","Ship_3.png", 200, 200)
-        self.ship3 = ShipSpriteClass(self.window_surface,"Ship_1.png","Ship_2.png","Ship_3.png", 100, 100)
-        self.ship4 = ShipSpriteClass(self.window_surface,"Ship_1.png","Ship_2.png","Ship_3.png", 300, 100)   
+        self.image_background = BackgroundSpriteClass(self.window_surface, "./Graphics/background.png")     
+        self.ship2 = SpriteClassFloating(self.window_surface,"./Graphics/Ship_1.png","./Graphics/Ship_2.png","./Graphics/Ship_3.png", 200, 200)
+        self.ship3 = SpriteClassFloating(self.window_surface,"./Graphics/Ship_1.png","./Graphics/Ship_2.png","./Graphics/Ship_3.png", 100, 100)
+        self.ship4 = SpriteClassFloating(self.window_surface,"./Graphics/Ship_1.png","./Graphics/Ship_2.png","./Graphics/Ship_3.png", 300, 100)   
         self.Menu_Container = pygame_gui.core.UIContainer(relative_rect=pygame.Rect((0,0),(800,600)), manager=self.ui_manager)
         self.Start_One = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((550, 550), (100, 50)), 
                                                     container= self.Menu_Container, 
@@ -57,10 +57,12 @@ class MenuClass:
             if event.ui_element == self.ExitGame:
                 pygame.event.post(pygame.event.Event(QUIT_GAME))
 
-    def do_state(self):
+    def do_DrawMain(self):
         if self.app.currentState == GameStates.SHOWING_MENU:  
             self.image_background.draw() 
             self.ship2.draw(self.app.time_cumulative+ 1.3)  
             self.ship3.draw(self.app.time_cumulative+ 2.7) 
             self.ship4.draw(self.app.time_cumulative+ .7) 
-        
+            
+    def do_DrawOverlay(self): # for on top of UI elements
+        pass

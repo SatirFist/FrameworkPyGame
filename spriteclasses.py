@@ -1,7 +1,7 @@
 import pygame
 import math
 
-class ShipSpriteClass:
+class SpriteClassFloating:
     surface1 = None
     surface2 = None
     surface3 = None
@@ -21,21 +21,15 @@ class ShipSpriteClass:
 
     def draw(self, cululative_time):
         frametime = cululative_time % self.framerate_time
-        location_time = cululative_time % self.period_cycle_time
-        # here is some math...sorry
-        # we want to move our ship up and down a bit like it is floating...
-        # we want to use the sin function from trig which varies from 1 to -1 in a sinusoidal pattern 
-        # when given an input from 0 to 2pi ... 
-        # so we have three 'variables'
-        # ship start location self.location_y
-        # time within out 'cycle' which happens every 5 seconds: location_time
-        # How far we want out ship to move up and down: self.movement_y
-        # ..so.. first we must scale our input location_time to the sin functions range of between 0 ans 2pi
-        scaled_time = (2 * math.pi * location_time)/ self.period_cycle_time
-        #now lets get our sin value which will range between 1 and -1
-        sin_output = math.sin(scaled_time)
-        # now lets scale that result to our movement_y range and calculate our ships location
-        loc_y = self.location_y + sin_output * self.movement_y
+        amplitude_x = 10  # adjust this to change the width of the float
+        amplitude_y = 20  # adjust this to change the height of the float
+        frequency_x = 1  # adjust this to change the speed in the x direction
+        frequency_y = 0.5  # adjust this to change the speed in the y direction
+        x = amplitude_x * math.sin(2*math.pi*frequency_x*(cululative_time))
+        y = amplitude_y * math.cos(2*math.pi*frequency_y*(cululative_time))
+        
+        loc_y = self.location_y + y
+        loc_x = self.location_x + x
 
         #every 1/3 of a second we want to change our 'frame' to a different picture
         if frametime < self.framerate_time * .90:
@@ -47,6 +41,17 @@ class ShipSpriteClass:
         else:
             self.window_surface.blit(self.surface2, (self.location_x, loc_y))    
 
+class BackgroundSpriteClass:
+    surface = None
+    window_surface = None
+    def __init__(self, window_surface, filename):
+        self.window_surface = window_surface
+        self.surface = pygame.image.load(filename).convert()
+
+    def draw(self):
+        self.window_surface.blit(self.surface, (0, 0))
+
+""" 
 class CountdownSpriteClass:
     surfacego = None
     surface1 = None
@@ -123,14 +128,4 @@ class ScoreSpriteClass:
         self.window_surface.blit(self.textscore, (t_x + 90, t_y + 200))
         self.window_surface.blit(self.textWPM, (t_x + 90, t_y + 220))
         self.window_surface.blit(self.textErrors, (t_x + 90, t_y + 240))
-
-class BackgroundSpriteClass:
-    surface = None
-    window_surface = None
-    def __init__(self, window_surface, filename):
-        self.window_surface = window_surface
-        self.surface = pygame.image.load(filename).convert()
-
-    def draw(self):
-        self.window_surface.blit(self.surface, (0, 0))
-
+ """
