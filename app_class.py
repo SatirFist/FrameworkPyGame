@@ -18,7 +18,7 @@ class AppClass():
 
     def __init__(self):
         pygame.init() 
-        pygame.display.set_caption('Turbo!') 
+        pygame.display.set_caption('What game!') 
         self.window_surface = pygame.display.set_mode((800, 600)) #window_surface = pygame.display.set_mode((800, 600), pygame.FULLSCREEN)
         self.manager = pygame_gui.UIManager((800, 600), "themes.json") 
         self.clock = pygame.time.Clock()

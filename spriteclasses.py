@@ -1,6 +1,47 @@
 import pygame
 import math
 
+class CountdownSpriteClass:
+    surfacego = None
+    surface1 = None
+    surface2 = None
+    surface3 = None
+    location_x = 0
+    location_y = 0   
+    def __init__(self, window_surface,  start_x, start_y):
+     
+        self.surface1 =  pygame.image.load("./Graphics/Countdown1.png").convert_alpha()
+        self.surface2 =  pygame.image.load("./Graphics/Countdown2.png").convert_alpha()
+        self.surface3 =  pygame.image.load("./Graphics/Countdown3.png").convert_alpha()
+        self.surfacego =  pygame.image.load("./Graphics/CountdownGo.png").convert_alpha()
+        self.location_x = start_x
+        self.location_y = start_y
+        self.window_surface = window_surface
+    def draw(self, delta_time):     
+        amplitude_x = 5  # adjust this to change the width of the float
+        amplitude_y = 10  # adjust this to change the height of the float
+        frequency_x = 1  # adjust this to change the speed in the x direction
+        frequency_y = 0.5  # adjust this to change the speed in the y direction
+        x = amplitude_x * math.sin(2*math.pi*frequency_x*(delta_time))
+        y = amplitude_y * math.cos(2*math.pi*frequency_y*(delta_time))
+  
+        if delta_time < 1.0:  
+            rect = self.surface3.get_rect()          
+            center_pos = rect.center
+            self.window_surface.blit(self.surface3, (self.location_x + x - center_pos[0], self.location_y + y - center_pos[1]))
+        elif delta_time < 2.0:
+            rect = self.surface2.get_rect()          
+            center_pos = rect.center
+            self.window_surface.blit(self.surface2, (self.location_x + x - center_pos[0], self.location_y + y - center_pos[1]))
+        elif delta_time < 3.0:
+            rect = self.surface1.get_rect()          
+            center_pos = rect.center
+            self.window_surface.blit(self.surface1, (self.location_x + x - center_pos[0], self.location_y + y - center_pos[1]))
+        else:
+            rect = self.surfacego.get_rect()          
+            center_pos = rect.center
+            self.window_surface.blit(self.surfacego, (self.location_x + x - center_pos[0], self.location_y + y - center_pos[1]))  
+
 class SpriteClassFloating:
     surface1 = None
     surface2 = None
@@ -51,44 +92,9 @@ class BackgroundSpriteClass:
     def draw(self):
         self.window_surface.blit(self.surface, (0, 0))
 
-""" 
-class CountdownSpriteClass:
-    surfacego = None
-    surface1 = None
-    surface2 = None
-    surface3 = None
-    location_x = 0
-    location_y = 0   
-    def __init__(self, window_surface, filename1, filename2, filename3, filenamego,  start_x, start_y):
-        self.surface1 = pygame.image.load(filename1).convert_alpha()
-        self.surface2 = pygame.image.load(filename2).convert_alpha()
-        self.surface3 = pygame.image.load(filename3).convert_alpha()
-        self.surfacego = pygame.image.load(filenamego).convert_alpha()
-        self.location_x = start_x
-        self.location_y = start_y
-        self.window_surface = window_surface
-    def draw(self, delta_time):     
-        amplitude_x = 10  # adjust this to change the width of the float
-        amplitude_y = 20  # adjust this to change the height of the float
-        frequency_x = 1  # adjust this to change the speed in the x direction
-        frequency_y = 0.5  # adjust this to change the speed in the y direction
-        x = amplitude_x * math.sin(2*math.pi*frequency_x*(delta_time))
-        y = amplitude_y * math.cos(2*math.pi*frequency_y*(delta_time))
-  
-        if delta_time < 1.0:
-            self.window_surface.blit(self.surface3, (self.location_x + x, self.location_y + y))
-        elif delta_time < 2.0:
-            self.window_surface.blit(self.surface2, (self.location_x + x, self.location_y + y))
-        elif delta_time < 3.0:
-            self.window_surface.blit(self.surface1, (self.location_x + x, self.location_y + y))
-        else:
-            self.window_surface.blit(self.surfacego, (self.location_x + x, self.location_y + y))  
 
-class ScoreSpriteClass:
-    surfacego = None
-    surface1 = None
-    surface2 = None
-    surface3 = None
+class RobotSpriteClass:
+    sprite = None
     location_x = 0
     location_y = 0   
     font1 = None
@@ -97,22 +103,10 @@ class ScoreSpriteClass:
     textErrors = None
     
     def __init__(self, window_surface, filename1,  start_x, start_y):
-        self.surface1 = pygame.image.load(filename1).convert_alpha()
+        self.sprite = pygame.image.load(filename1).convert_alpha()
         self.location_x = start_x
         self.location_y = start_y
-        self.window_surface = window_surface
-        self.font1 = pygame.font.SysFont('HBC.ttf', 30)
-        self.textscore = self.font1.render('Score: 0', True, (255, 0, 0))
-        self.textWPM = self.font1.render('WPM: 0', True, (255, 0, 0))
-        self.textErrors = self.font1.render('Misses: 0', True, (255, 0, 0))
-
-    def setup(self, score, wpm, errors):
-        txt = "Score: {:.0f}"
-        self.textscore = self.font1.render(txt.format(score), True, (255, 0, 0))
-        txt = "WPM: {:.0f}"
-        self.textWPM = self.font1.render(txt.format(wpm), True, (255, 0, 0))
-        txt = "Errors: {:.0f}"
-        self.textErrors = self.font1.render(txt.format(errors), True, (255, 0, 0))        
+        self.window_surface = window_surface     
 
     def draw(self, delta_time):     
         amplitude_x = 10  # adjust this to change the width of the float
@@ -124,8 +118,4 @@ class ScoreSpriteClass:
         #pygame
         t_x = self.location_x + x
         t_y = self.location_y + y
-        self.window_surface.blit(self.surface1, (t_x, t_y))
-        self.window_surface.blit(self.textscore, (t_x + 90, t_y + 200))
-        self.window_surface.blit(self.textWPM, (t_x + 90, t_y + 220))
-        self.window_surface.blit(self.textErrors, (t_x + 90, t_y + 240))
- """
+        self.window_surface.blit(self.sprite, (t_x, t_y))

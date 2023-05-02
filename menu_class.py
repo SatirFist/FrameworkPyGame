@@ -12,9 +12,7 @@ class MenuClass:
     Start_One = None
     namePlayer1 = None
     ExitGame = None
-    ship2 = None
-    ship3 = None
-    ship4 = None
+    Robot = None
     app = None
 
     def __init__(self, app):
@@ -22,9 +20,7 @@ class MenuClass:
         self.window_surface = self.app.window_surface
         self.ui_manager = self.app.manager
         self.image_background = BackgroundSpriteClass(self.window_surface, "./Graphics/background.png")     
-        self.ship2 = SpriteClassFloating(self.window_surface,"./Graphics/Ship_1.png","./Graphics/Ship_2.png","./Graphics/Ship_3.png", 200, 200)
-        self.ship3 = SpriteClassFloating(self.window_surface,"./Graphics/Ship_1.png","./Graphics/Ship_2.png","./Graphics/Ship_3.png", 100, 100)
-        self.ship4 = SpriteClassFloating(self.window_surface,"./Graphics/Ship_1.png","./Graphics/Ship_2.png","./Graphics/Ship_3.png", 300, 100)   
+        self.Robot = RobotSpriteClass(self.window_surface,"./Graphics/Robot.png", 550, 110)
         self.Menu_Container = pygame_gui.core.UIContainer(relative_rect=pygame.Rect((0,0),(800,600)), manager=self.ui_manager)
         self.Start_One = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((550, 550), (100, 50)), 
                                                     container= self.Menu_Container, 
@@ -60,9 +56,7 @@ class MenuClass:
     def do_DrawMain(self):
         if self.app.currentState == GameStates.SHOWING_MENU:  
             self.image_background.draw() 
-            self.ship2.draw(self.app.time_cumulative+ 1.3)  
-            self.ship3.draw(self.app.time_cumulative+ 2.7) 
-            self.ship4.draw(self.app.time_cumulative+ .7) 
+            self.Robot.draw(self.app.time_cumulative)  
             
     def do_DrawOverlay(self): # for on top of UI elements
         pass
