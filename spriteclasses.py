@@ -92,7 +92,7 @@ class ErikBergClass:
     MoveToX = 10
     speed = 150
     timesincelastdrop = 0.0
-    prob = 2.0
+    prob = 1.0
 
     def __init__(self, window_surface):
         self.surface =  pygame.image.load("./Graphics/ErikBerg.png").convert_alpha()
@@ -100,7 +100,7 @@ class ErikBergClass:
 
     def draw(self, timedelta):
         self.timesincelastdrop += timedelta
-        if self.timesincelastdrop > 1.0: # no faster than this
+        if self.timesincelastdrop > 0.25: # no faster than this
             if random.random() * self.timesincelastdrop > self.prob:
                 self.timesincelastdrop = 0.0
                 # lets drop a bomb

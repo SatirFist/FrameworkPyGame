@@ -9,15 +9,16 @@ class BombClass:
     window_surface = None
     loc = [] 
     nloc = [] 
-    velocity = 0
-    acceleration = 18
-    speedcap = 100    
+    velocity = 100
+    acceleration = 100
+    speedcap = 800    
     isEssay = True
     deleteme = False
 
     def __init__(self, window_surface, isMath, x, y):
         self.loc = [x,y]
         self.nloc = [x,y]
+        self.velocity = 100 + random.random() * 200
         if isMath:
             self.isEssay = False
             self.surface =  pygame.image.load("./Graphics/math problem.png").convert_alpha()
@@ -42,7 +43,7 @@ class BulletClass:
     window_surface = None
     loc = []
     nvect = []
-    velocity = 200
+    velocity = 400
      
     isEssay = True
     deleteme = False

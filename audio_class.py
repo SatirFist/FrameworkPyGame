@@ -22,7 +22,7 @@ class App_SoundsClass():
             pygame.mixer.music.pause()
             pygame.mixer.music.load("./Audio/Game.wav")
             pygame.mixer.music.play(-1) # Play forever                        
-        if event.type == PLAY_CLIP1:
+        if event.type == SHOOT_GPT or event.type == SHOOT_PHOTO_MATH:
             self.Clip1.play()
-        if event.type == PLAY_CLIP2:
+        if event.type == BOOM:
             self.Clip2.play()
