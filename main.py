@@ -6,11 +6,13 @@ from app_class import *
 from menu_class import *
 from game_class import *
 from audio_class import *
+from bullets_n_bombs import *
 
 app = AppClass()
 menu = MenuClass(app)
 game = GameClass(app)
 audio = App_SoundsClass()
+BnB = BnBClass(app)
 
 app.currentState = GameStates.SHOWING_MENU
 app.nextState = GameStates.SHOWING_MENU                    
@@ -22,6 +24,7 @@ while app.is_running:
         menu.handle_event(event)
         game.handle_event(event)
         audio.handle_event(event)
+        BnB.handle_event(event)
         if event.type == SWITCH_TO_MENU:                            
             app.nextState = GameStates.SHOWING_MENU   
         elif event.type == START_COUNTDOWN_TO_GAME:                        
@@ -40,7 +43,8 @@ while app.is_running:
 
     app.manager.update(app.time_delta)
     menu.do_DrawMain()
-    game.do_DrawMain()        
+    game.do_DrawMain()   
+    BnB.do_DrawMain()     
     app.manager.draw_ui(app.window_surface)
     game.do_DrawOverlay()  
     menu.do_DrawOverlay()  

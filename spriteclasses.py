@@ -1,5 +1,7 @@
 import pygame
 import math
+import random
+from events_states import *
 
 class CountdownSpriteClass:
     surfacego = None
@@ -82,6 +84,57 @@ class SpriteClassFloating:
         else:
             self.window_surface.blit(self.surface2, (self.location_x, loc_y))    
 
+class ErikBergClass:
+    surface = None
+    window_surface = None
+    LocX = 400.0
+    LocY = 10.0
+    MoveToX = 10
+    speed = 150
+    timesincelastdrop = 0.0
+    prob = 2.0
+
+    def __init__(self, window_surface):
+        self.surface =  pygame.image.load("./Graphics/ErikBerg.png").convert_alpha()
+        self.window_surface = window_surface
+
+    def draw(self, timedelta):
+        self.timesincelastdrop += timedelta
+        if self.timesincelastdrop > 1.0: # no faster than this
+            if random.random() * self.timesincelastdrop > self.prob:
+                self.timesincelastdrop = 0.0
+                # lets drop a bomb
+                if random.random() >= 0.50:
+                    pygame.event.post(pygame.event.Event(DROP_ESSAY, {'X': self.LocX, 'Y':self.LocY}))                     
+                else:
+                    pygame.event.post(pygame.event.Event(DROP_MATH, {'X': self.LocX, 'Y':self.LocY}))                     
+        if self.LocX == self.MoveToX:
+            self.MoveToX = random.random()*672
+        if self.LocX > self.MoveToX:
+            self.LocX -= self.speed * timedelta
+            if self.LocX <= self.MoveToX:
+                self.LocX = self.MoveToX
+        else:
+            self.LocX += self.speed * timedelta
+            if self.LocX >= self.MoveToX:
+                self.LocX = self.MoveToX        
+        self.window_surface.blit(self.surface, (self.LocX, self.LocY))                    
+    
+
+class BaseStationClass:
+    surface = None
+    window_surface = None
+    LocX = 340
+    LocY = 550
+
+    def __init__(self, window_surface):
+        self.surface =  pygame.image.load("./Graphics/Base.png").convert_alpha()
+        self.window_surface = window_surface
+
+    def draw(self, timedelta):    
+        self.window_surface.blit(self.surface, (self.LocX, self.LocY))  
+
+
 class BackgroundSpriteClass:
     surface = None
     window_surface = None
@@ -92,7 +145,7 @@ class BackgroundSpriteClass:
     def draw(self):
         self.window_surface.blit(self.surface, (0, 0))
 
-
+    
 class RobotSpriteClass:
     sprite = None
     location_x = 0

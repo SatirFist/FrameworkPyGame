@@ -8,8 +8,14 @@ START_GAME              = pygame.event.custom_type()
 END_GAME_PAUSE          = pygame.event.custom_type()
 QUIT_GAME               = pygame.event.custom_type() # shut it down
 QUIT_PLAY               = pygame.event.custom_type() # give up on play and return to menu
-PLAY_CLIP1          = pygame.event.custom_type()
-PLAY_CLIP2            = pygame.event.custom_type()
+PLAY_CLIP1              = pygame.event.custom_type()
+PLAY_CLIP2              = pygame.event.custom_type()
+
+DROP_ESSAY              = pygame.event.custom_type()
+DROP_MATH               = pygame.event.custom_type()
+SHOOT_GPT               = pygame.event.custom_type()
+SHOOT_PHOTO_MATH        = pygame.event.custom_type()
+BOOM                    = pygame.event.custom_type()
 
 #lets make sone states
 class GameStates(Enum):
